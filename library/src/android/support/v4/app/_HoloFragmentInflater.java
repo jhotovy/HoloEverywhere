@@ -1,21 +1,22 @@
 
 package android.support.v4.app;
 
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.widget.FrameLayout;
+
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.TypedArray;
 import android.support.v4.app.FragmentActivity.FragmentTag;
+import android.support.v4.app.NoSaveStateFrameLayout.NoSaveStateFrameLayoutCreator;
 import android.support.v7.internal.view.menu.ContextMenuDecorView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.widget.FrameLayout;
-
 public class _HoloFragmentInflater {
     static {
-        NoSaveStateFrameLayout.sNoSaveStateFrameLayoutCreator = new NoSaveStateFrameLayout.NoSaveStateFrameLayoutCreator() {
+        NoSaveStateFrameLayoutCreator sNoSaveStateFrameLayoutCreator = new NoSaveStateFrameLayout.NoSaveStateFrameLayoutCreator() {
             @Override
             public ViewGroup create(Fragment fragment, View view) {
                 final FrameLayout wrapper;
