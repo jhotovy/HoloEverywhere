@@ -5,7 +5,7 @@
 	<groupId>org.holoeverywhere</groupId>
 	<artifactId>parent</artifactId>
 	<packaging>pom</packaging>
-	<version>2.1.0</version>
+	<version>2.1.1-SNAPSHOT</version>
 
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -65,7 +65,7 @@
 		<repository>
 			<id>holoeverywhereRepo</id>
 			<name>HoloEverywhere Repo</name>
-			<url>https://raw.github.com/Prototik/HoloEverywhere/repo</url>
+			<url>http://192.241.191.41/repo</url>
 			<layout>default</layout>
 		</repository>
 	</repositories>
@@ -74,7 +74,7 @@
 		<repository>
 			<id>holoeverywhereRepo</id>
 			<name>HoloEverywhere Repo</name>
-			<url>https://raw.github.com/Prototik/HoloEverywhere/repo</url>
+			<url>http://192.241.191.41/repo</url>
 			<uniqueVersion>true</uniqueVersion>
 		</repository>
 	</distributionManagement>
@@ -107,14 +107,14 @@
 			<dependency>
 				<groupId>android</groupId>
 				<artifactId>android</artifactId>
-				<version>4.3_r2</version>
+				<version>4.4.2_r2</version>
 				<scope>provided</scope>
 			</dependency>
 
             <dependency>
                 <groupId>com.android.support</groupId>
                 <artifactId>support-v4</artifactId>
-                <version>18.0.3</version>
+                <version>19.1.0</version>
             </dependency>
 
             <dependency>
@@ -128,26 +128,6 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-				<plugin>
-					<groupId>org.holoeverywhere</groupId>
-					<artifactId>resbuilder</artifactId>
-					<version>2.1.1</version>
-					<inherited>true</inherited>
-					<executions>
-						<execution>
-							<goals>
-								<goal>build</goal>
-							</goals>
-						</execution>
-					</executions>
-					<configuration>
-						<verbose>false</verbose>
-						<includeDirs>
-							<dir>${project.basedir}/resbuilder</dir>
-						</includeDirs>
-					</configuration>
-				</plugin>
-
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -197,12 +177,12 @@
 				<plugin>
 					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 					<artifactId>android-maven-plugin</artifactId>
-					<version>3.8.0</version>
+					<version>3.8.2</version>
 					<inherited>true</inherited>
 					<extensions>true</extensions>
 					<configuration>
 						<sdk>
-							<platform>18</platform>
+							<platform>19</platform>
 						</sdk>
 						<sign>
 							<debug>false</debug>
@@ -215,37 +195,6 @@
 							<skip>true</skip>
 						</proguard>
 					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.holoeverywhere</groupId>
-										<artifactId>resbuilder</artifactId>
-										<versionRange>${project.version}</versionRange>
-										<goals>
-											<goal>build</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<execute />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-checkstyle-plugin</artifactId>
-					<version>2.10</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

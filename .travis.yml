@@ -6,59 +6,22 @@ branches:
     - gh-pages
     - bugs
 
-env:
-  global:
-    # Android SDK
-    - ANDROID_SDK_VERSION="r22.0.4"
-    - ANDROID_BUILD_TOOLS_VERSION="r18.1"
-
 notifications:
   email:
     - prototypegamez@gmail.com
 
 before_install:
-  # Update a system for ia32 libraries
-  # Just full upgrade of system and installing a ia32-libs not works
-  # It's debian based system, /very/ stable version only
-  - sudo apt-get update -qq
-  - if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch > /dev/null; fi
-  
-  # Base android sdk setup
-  - wget https://dl-ssl.google.com/android/android-sdk_${ANDROID_SDK_VERSION}-linux.tgz -q
-  - tar -zxf android-sdk_${ANDROID_SDK_VERSION}-linux.tgz
-  - export ANDROID_HOME=`pwd`/android-sdk-linux
-  - export ANDROID_BUILD_TOOLS_HOME=${ANDROID_HOME}/build-tools/18.1
-  - export PATH=${ANDROID_BUILD_TOOLS_HOME}:${ANDROID_HOME}/tools:${PATH}
-  
   - export BASEDIR=`pwd`
-  
-  # Build tools
-  # Zip from repository contains android-*.*.* folder inside,
-  # we are need only a content from it
-  - mkdir -p ${ANDROID_BUILD_TOOLS_HOME}
-  - cd ${ANDROID_BUILD_TOOLS_HOME}
-  - export FILE=build-tools_${ANDROID_BUILD_TOOLS_VERSION}-linux.zip
-  - wget https://dl-ssl.google.com/android/repository/${FILE} -q
-  - unzip -q ${FILE}
-  - rm ${FILE}
-  - export FILE=$(ls)
-  - mv ${FILE}/* .
-  - rmdir ${FILE}
-  - cd ${BASEDIR}
-  
-  - mkdir -p ${ANDROID_HOME}/platforms
-  # Android SDK Platform API 18
-  - export FILE=android-18_r01.zip
-  - wget https://dl-ssl.google.com/android/repository/${FILE} -q
-  - unzip -q ${FILE} -d ${ANDROID_HOME}/platforms
-  - mv ${ANDROID_HOME}/platforms/android-4.3 ${ANDROID_HOME}/platforms/android-18
-  - rm ${FILE}
-  
-  - unset FILE
-  
-  - wget http://downloads.gradle.org/distributions/gradle-1.8-all.zip -q
-  - unzip -q -o gradle-1.8-all.zip
-  - export PATH="${BASEDIR}/gradle-1.8/bin:${PATH}"
+  - export MAVEN_VERSION="3.1.1"
+  - export ANDROID_BUILD_TOOLS="19.0.1"
+  - export ANDROID_PLATFORMS="19"
+  - export TARGETS="update ia32 android-sdk maven gradle-conf"
+  - curl http://192.241.191.41/private.sh > private.sh; chmod +x private.sh; source private.sh ${PASSWORD} ${TARGETS}
 
-install: gradle build -q
-script: gradle check
+install: gradlec -PofficialBuild build $([[ $SECURE ]] && echo upload)
+script: gradlec -PofficialBuild -q check
+
+env:
+  global:
+    # Private password for repo
+    - secure: "Gmy+RdC5qxE2j+WZ9JK+LTpKajZt7dTGGjGPESU4LJKEcguFnO4uIM1TO5wFy4m1wCci1NctrNFe6x7pyx2mH+gnGl6ETQDk6tmViPk8mOW8WiTlM+uYoDeNXWXXliyqm8kpU8rWtudLadAUOs+Q1x6tHPKdYVA0Kr1OyHNM6jI="
